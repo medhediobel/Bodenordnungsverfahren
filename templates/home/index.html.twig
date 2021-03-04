@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DLR Portal{% endblock %}
+
+{% block body %}
+<style>
+		.articles {
+			border-radius: 10px;
+			box-shadow: 0 16px 16px rgba(0, 0, 0, .25);
+			padding: 16px 20px;
+		}
+		img {
+			border-radius: 10px;
+			box-shadow: 0 16px 16px rgba(0, 0, 0, .25);
+			margin: 10px;
+		}
+	
+	</style>
+
+<div class="jumbotron text-center">
+	<h4 class="mt-5 mb-5">Anhörungstermin  Flurbereinigung zur Aufstellung des Planes über die gemeinschaftlichen und öffentlichen Anlagen</h4>
+	<h5>Alle Bodenordnungsverfahren RLP</h5>
+</div>
+<div class="container">
+		<form action="">
+			<label for="cars">Dienstsitz:</label>
+			<select name="cars" id="cars">
+					<option value="">Mayen</option>
+					<option value="">Bad Kreuznach</option>
+					<option value="">Bernkastel-Kues</option>
+					<option value="">Bitburg</option>
+					<option value="">Kaiserslautern</option>
+			</select>
+				<br><br>
+			<input type="submit" value="Submit">
+		</form>
+</div>
+
+{% for verfahren in verfahren %}
+	<section class="articles mt-5">
+			<article class="b-5m">
+				<div class="metadata">
+					<span> V.Nr:  {{ verfahren.nummer}} </span> <span> </span>
+					<a href="{{ path('verfahren_show', {'id' : verfahren.id }) }}"><h2> {{ verfahren.name }}  </h2> </a> {{ verfahren.dienstsitz.ort }}
+				</div>
+				<div class="metadata">
+				<span class="display-6">
+						 {{ verfahren.art}}
+					</span>
+					am {{ verfahren.createdAt | date('d.m.y')}} Um {{ verfahren.createdAt | date('H:i')}} uhr
+					<span class="badge badge-danger">
+						
+					</span>
+					<span class="badge badge-success">
+						 
+					</span>
+						
+				</div>
+					<br><br>
+				<div class="content">
+					<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+						<p> {{ verfahren.ziel }} </p>
+						
+					</div>
+				</div>
+			</article>
+	</section>
+
+{% endfor %}
+			{# display navigation #}
+				<div class="navigation mt-5 mb-5">
+					{{ knp_pagination_render(verfahren) }}
+				</div>
+    
+{% endblock %}
+
+

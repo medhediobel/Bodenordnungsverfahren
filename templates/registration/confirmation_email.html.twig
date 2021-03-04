@@ -1,0 +1,15 @@
+
+
+{% block body %}
+<h1>Hallo! Bitte bestätigen Sie Ihre E-Mail!</h1>
+
+<p>
+    Bitte bestätigen Sie Ihre E-Mail-Adresse, indem Sie auf den folgenden Link klicken: <br><br>
+    <a href="{{ signedUrl|raw }}">Bestätigen Sie meine E-Mail</a>.
+    Dieser Link verfällt in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    
+</p>
+{% endblock %}

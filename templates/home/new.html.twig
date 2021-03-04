@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Verfahren{% endblock %}
+
+{% block body %}
+<h1>Neu Bodenordnungsverfahren </h1>
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn btn-success mt-5 mb-5" >Senden</button>
+{{ form_end(form) }}
+{% endblock %}

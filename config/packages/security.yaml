@@ -1,0 +1,51 @@
+security:
+    encoders:
+        App\Entity\Users:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\Users
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            lazy: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\UsersAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+
+    # hier ist Ihr Standardinhalt
+    # Im access_control-Teil definieren wir die geschützten Routen
+    access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/user, roles: ROLE_USER }
+         - { path: ^/behoerde, roles: ROLE_TOEB }
+         - { path: ^/beteiligte, roles: ROLE_MODO }
+
+    # Der Teil role_hierarchy enthält die Rollenhierarchie.
+    # Ein Editor ist auch ein Benutzer
+    # Ein Administrator ist auch ein Redakteur und damit ein Benutzer
+    role_hierarchy:
+       # Role_EDITOR: ROLE_USER
+       # ROLE_ADMIN: Role_EDITOR

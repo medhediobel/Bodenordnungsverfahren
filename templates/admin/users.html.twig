@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Benutzerliste{% endblock %}
+
+{% block body %}
+    <h1>Benutzerliste</h1>
+    <table class="table">
+        <thead>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Rollen</th>
+            <th>Verfahren</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {# We are approaching the users #}
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {# We close on the roles #}
+                        {% for role in user.roles %}
+                            {% if role == "ROLE_USER" %}
+                                User
+                            {% elseif role == "ROLE_MODO" %}
+                                Beteiligte
+                            {% elseif role == "ROLE_TOEB" %}
+                                TÖB
+                            {% elseif role == "ROLE_ADMIN" %}
+                                Admin
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td></td>
+                    <td><a href="{{ path('admin_benutzer_modifizieren', {'id': user.id}) }}" class="btn btn-warning">Bearbeiten</a></td>
+                </tr>
+                
+            {% else %}
+                <p>Keine registrierten Benutzer</p>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ verfahren.name }}{% endblock %}
+
+{% block body %}
+<style>
+.articles {
+			border-radius: 10px;
+			box-shadow: 0 16px 16px rgba(0, 0, 0, 0.25);
+			padding: 16px 20px;
+		}
+		img {
+			border-radius: 10px;
+			box-shadow: 0 16px 16px rgba(0, 0, 0, 0.25);
+			margin: 10px;
+		}
+
+		#comments {
+			padding: 15px;
+		}
+		#mapid{
+			height: 400px;
+		}
+	</style>
+
+    {% for message in app.flashes('message') %}
+	<div class="alert alert-success" role="alert">{{ message }}</div>
+	{% endfor %}
+
+	<section class="articles mt-5">
+		<article class="b-5m">
+		<h4>V.Art : {{ verfahren.art}}</h4>
+			<div class="container mt-4">
+				<div class="row">
+					<div class="col-md-8">
+						Verfahrensbilder
+					</div>
+					<div class="col-md-4">
+						<h3>Verfahrensdaten</h3>
+                        <h5>Dienstsitz :	{{ verfahren.dienstsitz.ort }}</h5>
+						<h5>V.Nr :	{{ verfahren.nummer}}</h5>
+						<h6></h6>
+						<span class="display-6"></span>
+
+<!-- Button trigger modal -->
+<div>
+    <button type="button" class="btn btn-primary mt-5 mb-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    E-mail
+    </button>
+</div>
+
+            			
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ verfahren.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+	 
+      <div class="modal-body">
+        
+		
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+        <button type="button" class="btn btn-primary">Senden</button>
+      </div>
+	  
+    </div>
+  </div>
+</div>
+
+					</div>
+				</div>
+				<div class="text-primary" style="font-size: 4rem;font-weight:bold;">
+					<a href="{{ verfahren.link }}">
+						<h2>
+							{{ verfahren.name }}
+						</h2>
+					</a>
+				</div>
+				<div class="metadata">
+                <h3>Aktualisierung: am	{{ verfahren.createdAt | date('d.m.y')}}    Um		{{ verfahren.createdAt | date('H:i')}}		uhr</h3>
+					
+					<span class="badge badge-success">
+						{{ verfahren.comments | length }}
+						Stellungnahmen
+					</span>
+					
+						von
+						<strong>
+						
+						</strong>
+
+				</div>
+                    <p>
+                        {{ verfahren.inhalt }}
+                    </p>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<tr>
+								<th>Karten</th>
+								<th>Formulare</th>
+								<th>Antrag</th>
+								<th>Information</th>
+							</tr>
+							<tr>
+								<td>Auszuge</td>
+								<td><a href="https://www.dlr.rlp.de/Internet/lew/LEW_Verfahren.nsf/c47a098de8697f77c12582f10023db80?OpenForm&ParentUNID=1449B923025F1ADCC1257C5D000592DC&InheritParent=2">Vollmacht</a></td>
+								<td><a href="https://www.dlr.rlp.de/Internet/lew/LEW_Verfahren.nsf/824ae548db9349bcc1257ef2004ecde8?OpenForm&ParentUNID=6F7DAB3DE35ADBADC125746000730018&InheritParent=2">Antrag auf Abmarkung</a></td>
+								<td><a href="https://www.dlr.rlp.de/Internet/lew/LEW_Verfahren.nsf/dc23183df95bb797c1257eeb0049d409?OpenForm&ParentUNID=6F7DAB3DE35ADBADC125746000730018&InheritParent=2">Vermessung und Abmarkung</a></td>
+							</tr>
+							<tr>
+								<td>PDF-Datei</td>
+								<td><a href="https://www.dlr.rlp.de/Internet/lew/LEW_Verfahren.nsf/47475a97d751c66ac1257f0000388eb8?OpenForm&ParentUNID=1449B923025F1ADCC1257C5D000592DC&InheritParent=2">Erklärung</a></td>
+								<td>PDF-Datei</td>
+								<td>PDF-Datei</td>
+							</tr>
+							<tr>
+								<td>Flurbereinigungsplan</td>
+								<td><a href="https://www.dlr.rlp.de/Internet/lew/LEW_Verfahren.nsf/764f2c8ac080e9ecc12581d2003bac39?OpenForm&ParentUNID=1449B923025F1ADCC1257C5D000592DC&InheritParent=2">Empfangsvollmacht</a></td>
+								<td>PDF-Datei</td>
+								<td>PDF-Datei</td>
+							</tr>
+							<tr>
+								<td>PDF-Datei</td>
+								<td>PDF-Datei</td>
+								<td>PDF-Datei</td>
+								<td>PDF-Datei</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+            <p>
+            {{ verfahren.ziel }}
+            </p>
+		</article>
+	</section>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('verfahren_edit', { 'id' : verfahren.id } ) }}" class="btn btn-success mt-5 mb-5">ändern</a>
+	{% endif %}
+
+
+	<h2 class="mt-5 mb-5">Die Stellungnahmen</h2>
+	<section id="comments">
+		{%	for comment in verfahren.comments	 %}
+			<div class="comment">
+				<div class="row">
+					<div class="md-col-3" style="color:red;">
+						<h3>{{ comment.toeb }}</h3>
+						
+						<small>{{ comment.createdAt | date('d.m.Y') }}
+							Um
+							{{ comment.createdAt | date('H:i') }}</small>
+					</div>
+				</div>
+				<p>{{ comment.einwendung  }}</p>
+			</div>
+
+			<hr>
+
+		{% endfor %}
+	</section>
+    <hr>
+    <section>
+			<h2>Einwendung schreiben
+			</h2>
+
+			{{ form_start(commentForm) }}
+			{{ form_widget(commentForm) }}
+
+			<button class="btn btn-success mt-5 mb-5">
+				Verleger
+			</button>
+
+			{{ form_end(commentForm) }}
+	</section>
+	<hr>
+
+
+{% endblock %}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}BodenordnungsVerfahren!{% endblock %}</title>
+        {% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+			<!-- Load Flashy default CSS -->
+   			<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+		
+		{% endblock %}
+    </head>
+    <body style="font-family: 'Oswald', sans-serif;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: #871d33 !important;">
+			<a class="navbar-brand" href="https://www.dlr-westpfalz.rlp.de/Internet/global/inetcntr.nsf/dlr_web_full.xsp?src=0O54704D1F&p1=F5WP3T5VU3&p3=3Z459988T6&p4=88672NX0W4">DLR Westpfalz</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav mr-auto">
+                    
+                   
+            
+					{% if app.user %}
+
+					<li class="nav-item">
+							<a class="nav-link active" href="{{path('home') }}">Bodenordnungsverfahren</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active" href="https://video-app-1814-3735-dev.twil.io?passcode=22600718143735">Videokonferenz</a>
+						</li>
+
+
+                        {% if is_granted('ROLE_TOEB' ) %}
+						<li class="nav-item">
+							<a class="nav-link active" href="">Einwendung</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="">Anhörungstermin nach §41</a>
+						</li>
+                        
+                        {% endif %}
+
+                        {% if is_granted('ROLE_MODO' ) %}
+					
+						<li class="nav-item">
+							<a class="nav-link active" href="">Widerspruch</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="">Vollmacht</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="">Anhörungstermin</a>
+						</li>
+                        {% endif %}
+
+						
+						
+					{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item">
+							<a class="nav-link active" href="">Kalender</a>
+						</li>
+						{% endif %}
+
+                    	<li class="nav-item">
+							<a class="nav-link active" href="">Email</a>
+						</li>
+
+						{% if is_granted('ROLE_ADMIN') %}
+						<li class="nav-item">
+                            <a class="nav-link active" href="{{ path('verfahren_new') }}">Verfahren</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ path('admin_benutzer') }}">Benutzer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ path('app_register') }}">Registrieren</a>
+                        </li>
+
+                    {% endif %}
+
+                        <li class="nav-item">
+							<a class="nav-link active" href="{{ path('app_logout') }}">Abmelden</a>
+						</li>
+
+                       
+					{% else %}
+
+						<li class="nav-item">
+							<a class="nav-link active" href="{{path('app_login') }}">Anmelden</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link active" href="{{path('kontakt') }}">Kontakt</a>
+						</li>
+					</ul>
+				{% endif %}
+
+			</div>
+		</nav>
+		<br>
+
+
+
+
+
+        <div class="container">
+        {% block body %}       {% endblock %}
+        </div>
+
+		{% block footer %}
+		
+			
+<footer class="footer mt-auto py-3 bg-light">
+
+  <div class="container mt-4">
+  		<div class="row">
+  					<div class="col-md-8">
+					  <div class="container">
+						
+							<a class="nav-link active" href="{{path('kontakt') }}">Kontakt</a>
+						
+						</div>
+						<div class="container">
+						<a class="nav-link active" href="">Erklärung zur Barrierefreiheit</a>
+						</div>
+						<div class="container">
+						<a class="nav-link active" href="www.dlr.rlp.de">www.dlr.rlp.de</a>
+						</div>
+						<div class="container">
+						<span class="text-muted">      </span>
+						</div>
+						
+						
+					</div>
+  
+   					<div class="col-md-4">
+					   <div class="container">
+					   <a class="nav-link active" href="">Impressum</a>
+						</div>
+						<div class="container">
+						<a class="nav-link active" href="">Sitemap</a>
+						</div>
+						<div class="container">
+						<a class="nav-link active" href="">Datenschutz</a>
+						</div>
+						<div class="container">
+						<span class="text-muted">    </span>
+						</div>
+						
+				</div>
+				<br>
+  	</div>
+  </div>
+</footer>
+{% endblock %}
+
+        {% block javascripts %}
+				{{ encore_entry_script_tags('app') }}
+			<!-- Flashy depends on jQuery -->
+				<script src="//code.jquery.com/jquery.js"></script>
+			<!-- Load Flashy default JavaScript -->
+				<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+			<!-- Include Flashy default partial -->
+				
+		{% endblock %}
+			{{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+    </body>
+</html>
